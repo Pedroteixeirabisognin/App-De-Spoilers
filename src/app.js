@@ -5,22 +5,26 @@ const http = require("http");
 const express = require("express");
 const spoilersRoute = require("../src/routes/spoilers")
 const sequelize = require("./database/database")
+const status = require("http-status")
 const app = express();
 
 app.use(express.json())
 
 app.use('/api', spoilersRoute)
 
+app.use((request, response, next) => {
+    response.status(status.NOT_FOUND).send();
+});
+
 app.use((error, request, response, next) => {
-    response.status(500).json({ error });
+    response.status(status.INTERNAL_SERVER_ERROR).json({ error });
 });
 
-const server = http.createServer(app)
 
-server.listen(port, hostname, () => {
-    console.log(`Servidor em execução em http://${hostname}:${port}/`);
+// server.listen(port, hostname, () => {
+//     console.log(`Servidor em execução em http://${hostname}:${port}/`);
 
-});
+// });
 
 //FORCE TRUE FAZ COM QUE O SEQUELIZE CRIE UMA TABELA COM OS DADOS RESPECTIVOS, PORÉM NÃO CRIA O BANCO
 //USE NA PRIMEIRA VEZ QUE CRIAR A TABELA, DEPOIS QUE ESTIVER TUDO
@@ -33,4 +37,5 @@ sequelize.sync({ force: true }).then(() => {
     const server = http.createServer(app);
 
     server.listen(port);
+
 });

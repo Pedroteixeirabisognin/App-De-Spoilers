@@ -1,14 +1,15 @@
 const Spoiler = require("../model/spoiler");
+const status = require("http-status")
 
 exports.buscarUm = (request, response, next) => {
     const id = request.params.id;
 
     Spoiler.findById(id).then(spoiler => {
         if (spoiler) {
-            response.status(200).send(spoiler);
+            response.status(status.OK).send(spoiler);
         }
         else {
-            response.status(404).send();
+            response.status(status.NOT_FOUND).send();
         }
     })
         .catch(error => next(error));
@@ -20,7 +21,7 @@ exports.buscarTodos = (request, response, next) => {
     let pagina = parseInt(request.query.pagina || 0);
 
     if (!Number.isInteger(limite) || !Number.isInteger(pagina)) {
-        response.status(400).send();
+        response.status(status.BAD_REQUEST).send();
     }
 
     const ITENS_POR_PAGINA = 10;
@@ -30,7 +31,7 @@ exports.buscarTodos = (request, response, next) => {
 
     Spoiler.findAll({ limit: limite, offset: pagina })
         .then(spoilers => {
-            response.status(200).send(spoilers);
+            response.status(status.OK).send(spoilers);
         }).catch(error => next(error));
 }
 
@@ -45,7 +46,7 @@ exports.criar = (request, response, next) => {
         espoliador:espoliador,
         descricao:descricao
     }).then(()=>{
-        response.status(201).send();
+        response.status(status.CREATED).send();
     }).catch((error)=>next(error));
 }
 
@@ -67,12 +68,12 @@ exports.atualizar = (request, response, next) =>{
             {where:{id:id}}
         )
         .then(()=>{
-            response.status(200).send();
+            response.status(status.OK).send();
         })
         .catch(error=> next(error));
         }
         else {
-            response.status(404).send();
+            response.status(status.NOT_FOUND).send();
         }
     })
         .catch(error => next(error));
@@ -88,12 +89,12 @@ exports.excluir = (request, response, next) => {
                 {where:{id:id}}
             )
         .then(()=>{
-            response.status(200).send();
+            response.status(status.OK).send();
         })
         .catch(error=> next(error));
         }
         else {
-            response.status(404).send();
+            response.status(status.NOT_FOUND).send();
         }
     })
         .catch(error => next(error));
