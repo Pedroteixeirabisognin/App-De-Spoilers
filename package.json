@@ -1,0 +1,16 @@
+{
+  "name": "web-api",
+  "version": "1.0.0",
+  "description": "Api-simples criada em um curso da devmedia",
+  "main": "src/app.js",
+  "scripts": {
+    "installreg": "npm --registry http://xaplprd14v.ibge.gov.br:8081/repository/npm-all/ install",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Pedro Teixeira Bisognin",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.16.4",
+    "sequelize": "^5.8.5"
+  }
+}
