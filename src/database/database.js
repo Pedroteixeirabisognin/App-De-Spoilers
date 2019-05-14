@@ -12,4 +12,7 @@ const sequelize = new Sequelize(
         host: config.database.host,
         dialect: config.database.dialect
     }
+
 );
+
+module.exports = sequelize;

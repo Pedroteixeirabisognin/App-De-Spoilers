@@ -6,7 +6,7 @@ module.exports = {
             name:"spoiler",
             dialect:"mysql",
             user:"root",
-            password:"123456"
+            password:""
         }
     },
     production:{
